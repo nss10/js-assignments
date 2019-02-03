@@ -206,7 +206,30 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+    const Top_Left = '┌';
+    const Top_Right = '┐';
+    const Bottom_Left = '└';
+    const Bottom_Right = '┘';
+    const Horizontal_Line = '─';
+    const Vertical_Line = '│';
+    const New_Line = '\n';
+    const Space_Character = ' ';
+    const drawRow = function (leftCharacter, centralCharacter, rightCharacter) {
+                        let result = leftCharacter;
+                        for (let i = 0; i < width - 2; i++) {
+                            result += centralCharacter;
+                        }
+                        result += rightCharacter + New_Line;
+                        return result;
+                    };
+
+
+    let rectangleFigure = drawRow(Top_Left,Horizontal_Line,Top_Right);
+    for(let i=0;i<height-2;i++){
+        rectangleFigure+=drawRow(Vertical_Line,Space_Character,Vertical_Line);
+    }
+    rectangleFigure+=drawRow(Bottom_Left,Horizontal_Line,Bottom_Right);
+    return rectangleFigure;
 }
 
 
@@ -226,7 +249,21 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+    let result='';
+    for (let x in str) {
+        let currentCharacterCode = str.charCodeAt(x);
+        if ((currentCharacterCode >= 'A'.charCodeAt(0) && currentCharacterCode <= 'M'.charCodeAt(0)) ||
+            (currentCharacterCode >= 'a'.charCodeAt(0) && currentCharacterCode <= 'm'.charCodeAt(0))) {
+            result += String.fromCharCode(currentCharacterCode + 13);
+        } else if ((currentCharacterCode >= 'N'.charCodeAt(0) && currentCharacterCode <= 'Z'.charCodeAt(0)) ||
+            (currentCharacterCode >= 'n'.charCodeAt(0) && currentCharacterCode <= 'z'.charCodeAt(0))) {
+            result += String.fromCharCode(currentCharacterCode - 13);
+        } else {
+            result += str.charAt(x);
+        }
+
+    }
+    return result;
 }
 
 /**
@@ -243,7 +280,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    return typeof(value) === 'string' || value instanceof String;
 }
 
 
@@ -272,7 +309,29 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+    let cardSymbol = value.substring(value.length-1);
+    let cardNumber = value.replace(cardSymbol,'');
+    let multiplicationFactor = 0;
+    let additionFactor = 0;
+    switch(cardSymbol){
+        case '♣': multiplicationFactor = 0;break;
+        case '♦': multiplicationFactor = 1;break;
+        case '♥': multiplicationFactor = 2;break;
+        case '♠': multiplicationFactor = 3;break;
+        default : multiplicationFactor = -1;break;
+    }
+
+    switch(cardNumber){
+        case 'A': additionFactor = 0;break;
+        case 'J': additionFactor = 10;break;
+        case 'Q': additionFactor = 11;break;
+        case 'K': additionFactor = 12;break;
+        default : additionFactor = cardNumber-1;break;
+    }
+
+    return multiplicationFactor*13 + additionFactor;
+    
+
 }
 
 

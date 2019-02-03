@@ -22,7 +22,7 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   return new Date(value);
 }
 
 /**
@@ -37,7 +37,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+   return new Date(value);
 }
 
 
@@ -56,7 +56,12 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   let year = date.getFullYear();
+   if (year % 100 === 0 && (year / 100) % 4 !== 0) {
+      return false;
+   } else {
+      return year % 4 == 0;
+   }
 }
 
 
@@ -76,9 +81,34 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
-}
+   let diffTimeInMillis =  endDate - startDate;
+   let diffString = '';
+   let diffInHours = Math.floor(diffTimeInMillis / (60*60*1000));
+   diffTimeInMillis -= diffInHours * (60*60*1000);
+   diffInHours = applyZeroes(diffInHours,false);
+   let diffInMins =   Math.floor(diffTimeInMillis / (60*1000));
+   diffTimeInMillis -= diffInMins * (60*1000);
+   diffInMins = applyZeroes(diffInMins,false);
+   
+   let diffInSeconds =  Math.floor(diffTimeInMillis / (1000));
+   diffTimeInMillis -= diffInSeconds * (1000);
+   diffInSeconds = applyZeroes(diffInSeconds,false);
+   diffTimeInMillis = applyZeroes(diffTimeInMillis,true);
+   
+   return `${diffInHours}:${diffInMins}:${diffInSeconds}.${diffTimeInMillis}`;
 
+
+
+   function applyZeroes(value,isMillis){
+      if(value<10){
+         value = '0'+value;
+      }
+      if(isMillis && value<100){
+         value='0' + value;
+      }
+      return value;
+   }
+}
 
 /**
  * Returns the angle (in radians) between the hands of an analog clock for the specified Greenwich time.
@@ -88,13 +118,22 @@ function timeSpanToString(startDate, endDate) {
  * @return {number}
  *
  * @example:
- *    Date.UTC(2016,2,5, 0, 0) => 0
+ *   
+ * . => 0
  *    Date.UTC(2016,3,5, 3, 0) => Math.PI/2
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+   let requiredDate = new Date(date);
+   let hoursAngle = (requiredDate.getUTCHours() + requiredDate.getUTCMinutes()/60)*30;
+   if(hoursAngle>=360){
+      hoursAngle-=360;
+  }
+   let minutesAngle = requiredDate.getUTCMinutes()*6;
+   let angleDifference = Math.abs(hoursAngle - minutesAngle);
+   let diffInDegrees =  angleDifference>=180 ? 360 - angleDifference : angleDifference;
+   return diffInDegrees * 2 * Math.PI / 360;
 }
 
 
