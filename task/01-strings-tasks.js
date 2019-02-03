@@ -311,27 +311,10 @@ function isString(value) {
 function getCardId(value) {
     let cardSymbol = value.substring(value.length-1);
     let cardNumber = value.replace(cardSymbol,'');
-    let multiplicationFactor = 0;
-    let additionFactor = 0;
-    switch(cardSymbol){
-        case '♣': multiplicationFactor = 0;break;
-        case '♦': multiplicationFactor = 1;break;
-        case '♥': multiplicationFactor = 2;break;
-        case '♠': multiplicationFactor = 3;break;
-        default : multiplicationFactor = -1;break;
-    }
-
-    switch(cardNumber){
-        case 'A': additionFactor = 0;break;
-        case 'J': additionFactor = 10;break;
-        case 'Q': additionFactor = 11;break;
-        case 'K': additionFactor = 12;break;
-        default : additionFactor = cardNumber-1;break;
-    }
-
-    return multiplicationFactor*13 + additionFactor;
-    
-
+    let multiplicationFactor = { '♣': 0, '♦': 1, '♥': 2, '♠': 3, };
+    let additionFactor = { 'A': 0, 'J': 10, 'Q': 11, 'K': 12, };
+    let addNumber = additionFactor[cardNumber]!==undefined ? additionFactor[cardNumber] : cardNumber - 1;
+    return multiplicationFactor[cardSymbol]*13 + addNumber;
 }
 
 
