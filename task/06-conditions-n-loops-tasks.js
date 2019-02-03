@@ -150,7 +150,7 @@ function doRectanglesOverlap(rect1, rect2) {
  *   
  */
 function isInsideCircle(circle, point) {
-    throw new Error('Not implemented');
+    return Math.pow((point.x - circle.center.x),2) + Math.pow((point.y - circle.center.y),2) < Math.pow(circle.radius,2);
 }
 
 
@@ -166,7 +166,13 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-    throw new Error('Not implemented');
+    for(let i=0;i<str.length;i++){
+        if(str.substring(i+1).indexOf(str[i])===-1 && 
+        str.substring(0,i).indexOf(str[i])===-1){
+            return str[i];
+        }
+    }
+    return null;
 }
 
 
@@ -192,7 +198,11 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-    throw new Error('Not implemented');
+    let result = '';
+    result += isStartIncluded ? '[' : '(';
+    result+= Math.min(a,b) +', ' + Math.max(a,b);
+    result += isEndIncluded ? ']' : ')';
+    return result;
 }
 
 
@@ -209,7 +219,7 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'noon' => 'noon'
  */
 function reverseString(str) {
-    throw new Error('Not implemented');
+    return str.split('').reverse().join('');
 }
 
 
@@ -226,7 +236,7 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    throw new Error('Not implemented');
+    return parseInt(num.toString().split('').reverse().join(''));
 }
 
 
@@ -270,7 +280,12 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+    let sum = 0;
+    while (num > 0) {
+        sum += num % 10;
+        num = Math.floor(num / 10);
+    }
+    return sum > 9 ? getDigitalRoot(sum) : sum;
 }
 
 
@@ -296,7 +311,24 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    let bracketArray=[];
+    let brackets = {
+        '[':']',
+        '{':'}',
+        '(':')',
+        '<':'>',
+    }
+    for(let character in str){
+        if(brackets[str[character]]){
+            bracketArray.push(str[character]);
+        } else{
+            if(brackets[bracketArray.pop()] !== str[character]){
+                return false;
+            }
+        }
+    }
+    return bracketArray.length===0;
+
 }
 
 
