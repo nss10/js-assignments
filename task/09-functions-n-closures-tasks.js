@@ -67,6 +67,7 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom() {
+    throw new Error('Not implemented');
     let result = 'y = ';
     for(let i=0;i<arguments.length;i++){
         if(Math.abs(arguments[i]) > 1){
@@ -108,7 +109,13 @@ function getPolynom() {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-    throw new Error('Not implemented');
+    let cache;
+    return function(){
+        if(!cache){
+            cache =  func();
+        }
+        return cache;
+    }
 }
 
 
@@ -128,7 +135,19 @@ function memoize(func) {
  * retryer() => 2
  */
 function retry(func, attempts) {
-    throw new Error('Not implemented');
+    let counter = 0;
+    return function(){
+        while(counter<attempts){
+            try {
+                counter++;
+                return func();
+            } catch (e) {
+                if (counter === attempts) {
+                    throw e;
+                }
+            }
+        }
+    }
 }
 
 
@@ -156,7 +175,17 @@ function retry(func, attempts) {
  *
  */
 function logger(func, logFunc) {
-    throw new Error('Not implemented');
+    return function(){
+        let argArray=[];
+        let result='';
+        for(let arg in arguments){
+            argArray.push(JSON.stringify(arguments[arg]));
+        }
+        logFunc(func.name + '('+argArray+') starts');
+        result = func.apply(null,arguments);
+        logFunc(func.name + '('+argArray+') ends');
+        return result;
+    }
 }
 
 
