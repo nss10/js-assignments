@@ -82,19 +82,19 @@ function isLeapYear(date) {
  */
 function timeSpanToString(startDate, endDate) {
    let diffTimeInMillis =  endDate - startDate;
-   let diffString = '';
-   let diffInHours = Math.floor(diffTimeInMillis / (60*60*1000));
-   diffTimeInMillis -= diffInHours * (60*60*1000);
-   diffInHours = applyZeroes(diffInHours,false);
-   let diffInMins =   Math.floor(diffTimeInMillis / (60*1000));
-   diffTimeInMillis -= diffInMins * (60*1000);
-   diffInMins = applyZeroes(diffInMins,false);
-   
-   let diffInSeconds =  Math.floor(diffTimeInMillis / (1000));
+
+   let diffInHours = Math.floor(diffTimeInMillis / (60 * 60 * 1000));
+   diffTimeInMillis -= diffInHours * (60 * 60 * 1000);
+   diffInHours = applyZeroes(diffInHours, false);
+   let diffInMins = Math.floor(diffTimeInMillis / (60 * 1000));
+   diffTimeInMillis -= diffInMins * (60 * 1000);
+   diffInMins = applyZeroes(diffInMins, false);
+
+   let diffInSeconds = Math.floor(diffTimeInMillis / (1000));
    diffTimeInMillis -= diffInSeconds * (1000);
-   diffInSeconds = applyZeroes(diffInSeconds,false);
-   diffTimeInMillis = applyZeroes(diffTimeInMillis,true);
-   
+   diffInSeconds = applyZeroes(diffInSeconds, false);
+   diffTimeInMillis = applyZeroes(diffTimeInMillis, true);
+
    return `${diffInHours}:${diffInMins}:${diffInSeconds}.${diffTimeInMillis}`;
 
 
@@ -126,13 +126,13 @@ function timeSpanToString(startDate, endDate) {
  */
 function angleBetweenClockHands(date) {
    let requiredDate = new Date(date);
-   let hoursAngle = (requiredDate.getUTCHours() + requiredDate.getUTCMinutes()/60)*30;
-   if(hoursAngle>=360){
-      hoursAngle-=360;
-  }
-   let minutesAngle = requiredDate.getUTCMinutes()*6;
+   let hoursAngle = (requiredDate.getUTCHours() + requiredDate.getUTCMinutes() / 60) * 30;
+   if (hoursAngle >= 360) {
+      hoursAngle -= 360;
+   }
+   let minutesAngle = requiredDate.getUTCMinutes() * 6;
    let angleDifference = Math.abs(hoursAngle - minutesAngle);
-   let diffInDegrees =  angleDifference>=180 ? 360 - angleDifference : angleDifference;
+   let diffInDegrees = angleDifference >= 180 ? 360 - angleDifference : angleDifference;
    return diffInDegrees * 2 * Math.PI / 360;
 }
 

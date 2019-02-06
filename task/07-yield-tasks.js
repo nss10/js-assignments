@@ -60,12 +60,12 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    let a=0,b=1;
+    let a = 0, b = 1;
     yield 0;
-    yield 1;    
-    while(true){
-        a=a+b;
-        b=a+b;
+    yield 1;
+    while (true) {
+        a = a + b;
+        b = a + b;
         yield a;
         yield b;
     }
@@ -104,10 +104,10 @@ function* getFibonacciSequence() {
  */
 function* depthTraversalTree(root) {
     let stack = [root];
-    while(stack.length>0){
-        let node =  stack.pop();
+    while (stack.length > 0) {
+        let node = stack.pop();
         yield node;
-        if(node.children){
+        if (node.children) {
             stack = stack.concat(node.children.reverse());
         }
     }
@@ -137,22 +137,22 @@ function* depthTraversalTree(root) {
  */
 function* breadthTraversalTree(root) {
     let queue = [root];
-    let i=0;
-    let isWideTree=false;
-    while(queue.length !== i){
-        if(queue[i].children){
+    let i = 0;
+    let isWideTree = false;
+    while (queue.length !== i) {
+        if (queue[i].children) {
             queue = queue.concat(queue[i].children);
         }
-        if(isWideTree || (queue[i].children && queue[i].children.length>1000)){
-            isWideTree=true;
+        if (isWideTree || (queue[i].children && queue[i].children.length > 1000)) {
+            isWideTree = true;
             yield queue[i];
             i++;
         }
-        else{
+        else {
             yield queue.shift();
-            isWideTree=false;
+            isWideTree = false;
         }
-    }   
+    }
 }
 
 
@@ -183,11 +183,11 @@ function* mergeSortedSequences(source1, source2) {
             b = s2.next();
         }
     }
-    while(!a.done){
+    while (!a.done) {
         yield a.value;
         a = s1.next();
     }
-    while(!b.done){
+    while (!b.done) {
         yield b.value;
         b = s2.next();
     }

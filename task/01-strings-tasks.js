@@ -22,7 +22,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-    return value1+value2;
+    return value1 + value2;
 
 }
 
@@ -70,7 +70,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    return value.replace('Hello, ','').replace('!','').trim();
+    return value.replace('Hello, ', '').replace('!', '').trim();
 }
 
 
@@ -115,9 +115,9 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    let result='';
-    for(let i=0;i<count;i++){
-        result+=value;
+    let result = '';
+    for (let index = 0; index < count; index++) {
+        result += value;
     }
     return result;
 }
@@ -135,7 +135,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    return str.replace(value,'');
+    return str.replace(value, '');
 }
 
 /**
@@ -150,7 +150,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    return str.substring(1,str.length-1);
+    return str.substring(1, str.length - 1);
 }
 
 
@@ -215,20 +215,20 @@ function getRectangleString(width, height) {
     const New_Line = '\n';
     const Space_Character = ' ';
     const drawRow = function (leftCharacter, centralCharacter, rightCharacter) {
-                        let result = leftCharacter;
-                        for (let i = 0; i < width - 2; i++) {
-                            result += centralCharacter;
-                        }
-                        result += rightCharacter + New_Line;
-                        return result;
-                    };
+        let result = leftCharacter;
+        for (let i = 0; i < width - 2; i++) {
+            result += centralCharacter;
+        }
+        result += rightCharacter + New_Line;
+        return result;
+    };
 
 
-    let rectangleFigure = drawRow(Top_Left,Horizontal_Line,Top_Right);
-    for(let i=0;i<height-2;i++){
-        rectangleFigure+=drawRow(Vertical_Line,Space_Character,Vertical_Line);
+    let rectangleFigure = drawRow(Top_Left, Horizontal_Line, Top_Right);
+    for (let i = 0; i < height - 2; i++) {
+        rectangleFigure += drawRow(Vertical_Line, Space_Character, Vertical_Line);
     }
-    rectangleFigure+=drawRow(Bottom_Left,Horizontal_Line,Bottom_Right);
+    rectangleFigure += drawRow(Bottom_Left, Horizontal_Line, Bottom_Right);
     return rectangleFigure;
 }
 
@@ -249,7 +249,7 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    let result='';
+    let result = '';
     for (let x in str) {
         let currentCharacterCode = str.charCodeAt(x);
         if ((currentCharacterCode >= 'A'.charCodeAt(0) && currentCharacterCode <= 'M'.charCodeAt(0)) ||
@@ -280,7 +280,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    return typeof(value) === 'string' || value instanceof String;
+    return typeof (value) === 'string' || value instanceof String;
 }
 
 
@@ -309,12 +309,12 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    let cardSymbol = value.substring(value.length-1);
-    let cardNumber = value.replace(cardSymbol,'');
-    let multiplicationFactor = { '♣': 0, '♦': 1, '♥': 2, '♠': 3, };
-    let additionFactor = { 'A': 0, 'J': 10, 'Q': 11, 'K': 12, };
-    let addNumber = additionFactor[cardNumber]!==undefined ? additionFactor[cardNumber] : cardNumber - 1;
-    return multiplicationFactor[cardSymbol]*13 + addNumber;
+    let cardSymbol = value.substring(value.length - 1);
+    let cardNumber = value.replace(cardSymbol, '');
+    let multiplicationFactorMap = { '♣': 0, '♦': 1, '♥': 2, '♠': 3, };
+    let additionFactorMap = { 'A': 0, 'J': 10, 'Q': 11, 'K': 12, };
+    let addNumber = additionFactorMap[cardNumber] !== undefined ? additionFactorMap[cardNumber] : cardNumber - 1;
+    return multiplicationFactorMap[cardSymbol] * 13 + addNumber;
 }
 
 

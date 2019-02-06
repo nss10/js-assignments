@@ -25,10 +25,10 @@
 function Rectangle(width, height) {
     this.width = width;
     this.height = height;
-    
+
 }
 
-Rectangle.prototype.getArea = function(){
+Rectangle.prototype.getArea = function () {
     return this.width * this.height;
 };
 
@@ -60,14 +60,15 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-    let obj = Object.create(proto);
-    let newObj = JSON.parse(json);
-    for (const key in newObj) {
-        if (newObj.hasOwnProperty(key)) {
-            obj[key] = newObj[key];
+    let objectFromProto = Object.create(proto);
+    let objectFromJson = JSON.parse(json);
+    for (const key in objectFromJson) {
+        if (objectFromJson.hasOwnProperty(key)) {
+            objectFromProto[key] = objectFromJson[key];
         }
     }
-    return obj;
+    
+    return objectFromProto;
 }
 
 
@@ -121,31 +122,31 @@ function fromJSON(proto, json) {
 
 const cssSelectorBuilder = {
 
-    element: function(value) {
+    element: function (value) {
         throw new Error('Not implemented');
     },
 
-    id: function(value) {
+    id: function (value) {
         throw new Error('Not implemented');
     },
 
-    class: function(value) {
+    class: function (value) {
         throw new Error('Not implemented');
     },
 
-    attr: function(value) {
+    attr: function (value) {
         throw new Error('Not implemented');
     },
 
-    pseudoClass: function(value) {
+    pseudoClass: function (value) {
         throw new Error('Not implemented');
     },
 
-    pseudoElement: function(value) {
+    pseudoElement: function (value) {
         throw new Error('Not implemented');
     },
 
-    combine: function(selector1, combinator, selector2) {
+    combine: function (selector1, combinator, selector2) {
         throw new Error('Not implemented');
     },
 };
